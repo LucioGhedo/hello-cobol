@@ -16,12 +16,13 @@
  01 TAB-NUM           PIC X(9) VALUE  
  
      
-          '198356742'.
+          '298356713'.
  01 TAB-ORDER REDEFINES TAB-NUM.
      05 NUMERO             OCCURS 9 TIMES.
           06 MATRICOLA         PIC X.
  01 USERSTOP                   PIC 99. 
  01 RESULT                     PIC 99 VALUE 0.
+ 01 SAVED                      PIC 9 VALUE 9.
 
 *
  PROCEDURE DIVISION. 
@@ -31,12 +32,30 @@
      
  ESEGUI.
        IF RESULT > 0       
-          IF MATRICOLA(RESULT) = 1
-                DISPLAY 'NUMERO ' MATRICOLA(RESULT)
-                DISPLAY 'TROVATO ALLA ' RESULT ' POSIZIONE'
+**********************************       
+* PER TROVARE QUELLO UGUALE A UNO*
+**********************************
+*          IF MATRICOLA(RESULT) = 1
+*                DISPLAY 'NUMERO ' MATRICOLA(RESULT)
+*                DISPLAY 'TROVATO ALLA ' RESULT ' POSIZIONE'
+*          END-IF
+**********************************
+*     PER TROVARE IL MINORE      *
+**********************************
+          IF SAVED > MATRICOLA(RESULT)
+                  MOVE MATRICOLA(RESULT) TO SAVED
           END-IF
-       END-IF.
+       END-IF. 
+**********************************
+*   AGGIUNGO UNO AL CONTATORE    *
+**********************************
        ADD 1 TO RESULT.
+**********************************       
+*     SE IL CICLO E' FINITO      *
+**********************************
+       IF RESULT = 10
+             DISPLAY SAVED
+       END-IF.
        
  FINE-ESEGUI. 
      EXIT.
